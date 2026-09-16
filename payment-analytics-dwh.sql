@@ -64,3 +64,12 @@ SELECT
   COUNT(DISTINCT EXTRACT(MONTH FROM timestamp)) AS distinct_months
 FROM `payment-analytics-dwh.payment_dwh.ad_events_stg`;
 
+---Creates a clean analytical table with validated user_id values and transformed event date fields.
+CREATE TABLE `payment-analytics-dwh.payment_dwh.cln_ad_events` AS
+SELECT
+  event_id, ad_id, user_id,
+  timestamp AS event_timestamp,
+  DATE(timestamp) AS event_date,
+  day_of_week, time_of_day, event_type
+FROM `payment-analytics-dwh.payment_dwh.ad_events_stg`
+WHERE REGEXP_CONTAINS(user_id, r'^[0-9a-fA-F]+$');
