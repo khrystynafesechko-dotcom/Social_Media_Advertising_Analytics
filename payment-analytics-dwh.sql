@@ -10,3 +10,14 @@ SELECT
   MAX(DATE(timestamp)) AS max_date,
   COUNT(DISTINCT EXTRACT(MONTH FROM timestamp)) AS distinct_months
 FROM `payment-analytics-dwh.payment_dwh.ad_events_stg`;
+
+---Validates the user_id format and calculates the count and percentage of valid and invalid values.
+SELECT
+  CASE
+    WHEN REGEXP_CONTAINS(user_id, r'^[0-9a-fA-F]+$') THEN 'valid_format'
+    ELSE 'invalid_format'
+  END AS format_status,
+  COUNT(*) AS cnt,
+  ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) AS pct
+FROM `payment-analytics-dwh.payment_dwh.users_stg`
+GROUP BY format_status;
