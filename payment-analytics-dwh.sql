@@ -1,4 +1,4 @@
-------This query retrieves the column names and data types for the ad_events_stg table, ordered by their position in the table.
+---Cheking the column names and data types for the ad_events_stg table, ordered by their position in the table.
 SELECT column_name, data_type
 FROM `payment-analytics-dwh.payment_dwh.INFORMATION_SCHEMA.COLUMNS`
 WHERE table_name = 'ad_events_stg'
@@ -73,3 +73,31 @@ SELECT
   day_of_week, time_of_day, event_type
 FROM `payment-analytics-dwh.payment_dwh.ad_events_stg`
 WHERE REGEXP_CONTAINS(user_id, r'^[0-9a-fA-F]+$');
+
+---Checking the table for zero values after cleaning.
+SELECT
+  COUNTIF(event_id IS NULL) AS null_event_id,
+  COUNTIF(ad_id IS NULL) AS null_ad_id,
+  COUNTIF(user_id IS NULL) AS null_user_id,
+  COUNTIF(event_timestamp IS NULL) AS null_timestamp,
+  COUNTIF(event_date IS NULL) AS null_event_date,
+  COUNTIF(event_type IS NULL) AS null_event_type
+FROM `payment-analytics-dwh.payment_dwh.cln_ad_events`;
+
+---Checking for duplicates in the cleaned table.
+SELECT event_id, COUNT(*) AS cnt
+FROM `payment-analytics-dwh.payment_dwh.cln_ad_events`
+GROUP BY event_id
+HAVING cnt > 1
+ORDER BY cnt DESC;
+
+---Checking the user_id format.
+SELECT COUNT(*) AS invalid_user_id
+FROM `payment-analytics-dwh.payment_dwh.cln_ad_events`
+WHERE NOT REGEXP_CONTAINS(user_id, r'^[0-9a-fA-F]+$');
+
+---Examines the number and types of events in the cleaned table.
+SELECT event_type, COUNT(*) AS cnt
+FROM `payment-analytics-dwh.payment_dwh.cln_ad_events`
+GROUP BY event_type
+ORDER BY cnt DESC;
