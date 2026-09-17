@@ -50,7 +50,7 @@ A cleaned analytical table, `cln_ad_events`, was created from the staging table.
 Valid `user_id` values were retained using the following regular expression:
 
 ```regex
-^[0-9a-fA-F]+$'''
+^[0-9a-fA-F]+$```
 
 
 ## Data Quality & Validation — `ads_stg`
