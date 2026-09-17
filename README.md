@@ -53,7 +53,9 @@ Valid `user_id` values were retained using the following regular expression:
 ^[0-9a-fA-F]+$
 
 
-# Data Quality & Validation — `ads_stg`
+## Data Quality & Validation — `ads_stg`
+
+### Validation Checks
 
 The following validation checks were performed:
 
@@ -66,14 +68,20 @@ The following validation checks were performed:
 
 ## Data Cleaning
 
+### Cleaned Analytical Table
+
 A cleaned analytical table, `cln_ads`, was created from the staging table.
 
-- Validated key identifiers and text fields.
-- Checked categorical fields for valid domain values.
-- Checked text fields for formatting inconsistencies.
-- Created the `cln_ads` table for further analytical processing.
+The cleaning process included:
+
+- Validating key identifiers and text fields.
+- Checking categorical fields for valid domain values.
+- Checking text fields for formatting inconsistencies.
+- Creating the `cln_ads` table for further analytical processing.
 
 ## Results
+
+### Validation Results
 
 - **NULL values:** validated across key columns.
 - **ID formats:** validated using `SAFE_CAST`.
