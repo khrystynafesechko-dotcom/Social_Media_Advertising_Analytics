@@ -22,3 +22,16 @@ SELECT
   COUNTIF(TRIM(target_age_group) = '' OR target_age_group IS NULL) AS null_age_group,
   COUNTIF(TRIM(target_interests) = '' OR target_interests IS NULL) AS null_interests
 FROM `payment-analytics-dwh.payment_dwh.ads_stg`;
+
+---Validation of allowed values (domain validation).
+SELECT DISTINCT ad_platform FROM `payment-analytics-dwh.payment_dwh.ads_stg`;
+SELECT DISTINCT ad_type FROM `payment-analytics-dwh.payment_dwh.ads_stg`;
+SELECT DISTINCT target_gender FROM `payment-analytics-dwh.payment_dwh.ads_stg`;
+SELECT DISTINCT target_age_group FROM `payment-analytics-dwh.payment_dwh.ads_stg`;
+
+---Text format and cleanliness check.
+SELECT ad_id, target_interests
+FROM `payment-analytics-dwh.payment_dwh.ads_stg`
+WHERE target_interests LIKE '%,,%'     
+   OR target_interests LIKE ', %'       
+   OR REGEXP_CONTAINS(target_interests, r'\s{2,}'); 
