@@ -33,3 +33,8 @@ WHERE duration_days != DATE_DIFF(end_date, start_date, DAY);
 SELECT campaign_id, total_budget
 FROM `payment_dwh.campaigns_stg`
 WHERE total_budget <= 0;
+
+---Creates a clean analytical table cln_campaigns
+CREATE TABLE `payment-analytics-dwh.payment_dwh.cln_campaigns` AS
+SELECT *
+FROM `payment-analytics-dwh.payment_dwh.campaigns_stg`;
