@@ -52,7 +52,8 @@ Valid `user_id` values were retained using the following regular expression:
 ```regex
 ^[0-9a-fA-F]+$
 
-## Data Quality & Validation — `ads_stg`
+
+# Data Quality & Validation — `ads_stg`
 
 The following validation checks were performed:
 
