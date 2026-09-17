@@ -84,3 +84,36 @@ The validation process confirmed that the main data quality checks were performe
 - **Categorical fields:** validated against expected domain values.
 - **Text formatting:** checked for inconsistencies in `target_interests`.
 - **Final table:** `cln_ads` was created as the cleaned analytical table for further analysis.
+
+## Data Quality & Validation — `Calendar_Table_stg`
+
+### Validation Checks
+
+The following validation checks were performed:
+
+- Checked for `NULL` values in all columns, including `Date`, `Day Name`, `Day Number`, `Month`, `Month Number`, `Week Day`, `Year`, and `Quarter`.
+- Checked for duplicate `Date` values, since `Date` serves as the primary key of the calendar table.
+
+## Data Cleaning
+
+### Cleaned Analytical Table
+
+A cleaned analytical table, `cln_calendar`, was created from the staging table `Calendar_Table_stg`.
+
+The cleaning process included:
+
+- Validating the `Date` column and all derived date attributes for missing values.
+- Checking `Date` for duplicate entries.
+- Creating the `cln_calendar` table for further analytical processing.
+
+## Results
+
+### Validation Results
+
+The validation process confirmed that the main data quality checks were performed before analytical processing:
+
+- **NULL values:** checked in all columns — no missing values found.
+- **Duplicates:** checked for duplicate `Date` values — no duplicates found.
+- **Final table:** `cln_calendar` was created as the cleaned analytical table for further analysis.
+
+> **Note:** The dataset is synthetic, so additional checks such as referential integrity, value anomalies, and date sequence continuity were not performed, as the data was generated without real-world source errors.
