@@ -51,3 +51,32 @@ Valid `user_id` values were retained using the following regular expression:
 
 ```regex
 ^[0-9a-fA-F]+$
+
+## Data Quality & Validation — `ads_stg`
+
+The following validation checks were performed:
+
+- Checked for `NULL` values in key columns such as `ad_id` and `campaign_id`.
+- Validated `ad_id` and `campaign_id` formats using `SAFE_CAST`.
+- Checked for duplicate `ad_id` values.
+- Checked for missing or empty values in key text fields.
+- Validated allowed values for `ad_platform`, `ad_type`, `target_gender`, and `target_age_group`.
+- Checked `target_interests` for formatting issues such as duplicate commas and excessive whitespace.
+
+## Data Cleaning
+
+A cleaned analytical table, `cln_ads`, was created from the staging table.
+
+- Validated key identifiers and text fields.
+- Checked categorical fields for valid domain values.
+- Checked text fields for formatting inconsistencies.
+- Created the `cln_ads` table for further analytical processing.
+
+## Results
+
+- **NULL values:** validated across key columns.
+- **ID formats:** validated using `SAFE_CAST`.
+- **Duplicates:** checked for duplicate `ad_id` values.
+- **Categorical fields:** validated against available domain values.
+- **Text formatting:** checked for inconsistencies in `target_interests`.
+- **Final table:** `cln_ads` was created for further analysis.
