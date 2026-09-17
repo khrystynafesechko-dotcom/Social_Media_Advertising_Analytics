@@ -1,8 +1,6 @@
-### Payment Analytics
+## Payment Analytics
 
-# Data Quality & Validation — `ad_events_stg`
-
-## Data Quality & Validation
+## Data Quality & Validation — `ad_events_stg`
 
 The following validation checks were performed:
 
