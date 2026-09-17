@@ -10,8 +10,13 @@ The following validation checks were performed:
 - Compared total rows with the number of unique `event_id` values to identify duplicates.
 - Checked key columns for `NULL` values.
 - Analyzed the distribution of `event_type`.
+  ![Img1](images/Img1.png)
+
 - Validated `day_of_week` against the date calculated from `timestamp`.
 - Identified users with unusually high numbers of events.
+- Analyzed the distribution of `event_type`.
+  ![IMG2](images/IMG2.png)
+
 - Validated the format of `user_id` using regular expressions.
 - Checked the minimum and maximum event dates.
 - Verified the number of distinct months represented in the dataset.
@@ -37,6 +42,8 @@ A cleaned analytical table, `cln_ad_events`, was created from the staging table.
 - **Valid records remaining:** approximately 30,397 records.
 - **User ID validation:** valid `user_id` values were retained based on the hexadecimal format `^[0-9a-fA-F]+$`.
 - **Final table:** `cln_ad_events` contains the cleaned data prepared for further analytical work.
+  
+  ![Img3](images/Img3.png)
 
 ## User ID Validation
 
