@@ -16,3 +16,7 @@ FROM `payment-analytics-dwh.payment_dwh.Calendar_Table_stg`
 GROUP BY Date
 HAVING cnt > 1;
 
+---Creates a clean analytical table cln_calendar_table
+CREATE TABLE `payment-analytics-dwh.payment_dwh.cln_calendar_table` AS
+SELECT *
+FROM `payment-analytics-dwh.payment_dwh.Calendar_Table_stg`;
