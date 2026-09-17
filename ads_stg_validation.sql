@@ -35,3 +35,8 @@ FROM `payment-analytics-dwh.payment_dwh.ads_stg`
 WHERE target_interests LIKE '%,,%'     
    OR target_interests LIKE ', %'       
    OR REGEXP_CONTAINS(target_interests, r'\s{2,}'); 
+
+---Creates a clean analytical table cln_ads
+CREATE TABLE `payment-analytics-dwh.payment_dwh.cln_ads` AS
+SELECT *
+FROM `payment-analytics-dwh.payment_dwh.ads_stg`;
