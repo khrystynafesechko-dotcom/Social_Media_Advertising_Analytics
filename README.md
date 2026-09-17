@@ -115,3 +115,35 @@ The validation process confirmed that the main data quality checks were performe
 - **Final table:** `cln_calendar` was created as the cleaned analytical table for further analysis.
 
 > **Note:** The dataset is synthetic, so additional checks such as referential integrity, value anomalies, and date sequence continuity were not performed, as the data was generated without real-world source errors.
+
+
+# Data Quality & Validation — Campaigns Table
+
+## Validation Checks
+The following validation checks were performed on the `campaigns_stg` table:
+
+* **Missing Values Validation:** Checked for `NULL` values across key columns including `campaign_id`, `name`, `start_date`, `end_date`, `duration_days`, and `total_budget`.
+* **Primary Key Uniqueness Check:** Verified that `campaign_id` contains zero duplicates to ensure a valid 1:Many relationship in Power BI.
+* **Date Logical Consistency:** Screened for logical errors where `end_date` mistakenly precedes `start_date`.
+* **Duration Calculation Verification:** Validated that the pre-calculated `duration_days` perfectly matches the actual difference between `end_date` and `start_date`.
+* **Budget Accuracy Check:** Flagged rows with anomalous, negative, or zero budgets (`total_budget <= 0`).
+
+## Data Cleaning
+### Cleaned Analytical Table
+A cleaned analytical table, `cln_campaigns`, was created from the staging table `campaigns_stg`.
+
+The cleaning process included:
+* Validating all key attributes and campaign metrics for missing values.
+* Ensuring complete logical consistency for dates and tracking metrics.
+* Checking the primary key for duplicate entries.
+* Materializing the verified data into the `cln_campaigns` table for seamless Power BI consumption.
+
+## Results
+### Validation Results
+The validation process confirmed that all critical data quality checks were successfully performed before analytical processing:
+
+* **NULL values:** Checked across all columns — no missing values found.
+* **Duplicates:** Checked for duplicate `campaign_id` entries — primary key uniqueness is maintained.
+* **Logical & Business Rules:** Dates, durations, and financial values passed all consistency checks.
+* **Final table:** `cln_campaigns` was successfully created as the clean analytical source for BI reporting.
+
