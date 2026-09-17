@@ -50,7 +50,7 @@ A cleaned analytical table, `cln_ad_events`, was created from the staging table.
 Valid `user_id` values were retained using the following regular expression:
 
 ```regex
-^[0-9a-fA-F]+$
+^[0-9a-fA-F]+$'''
 
 
 ## Data Quality & Validation — `ads_stg`
@@ -59,23 +59,23 @@ Valid `user_id` values were retained using the following regular expression:
 
 The following validation checks were performed:
 
-- Checked for `NULL` values in key columns such as `ad_id` and `campaign_id`.
+- Checked for `NULL` values in key columns, including `ad_id` and `campaign_id`.
 - Validated `ad_id` and `campaign_id` formats using `SAFE_CAST`.
 - Checked for duplicate `ad_id` values.
 - Checked for missing or empty values in key text fields.
-- Validated allowed values for `ad_platform`, `ad_type`, `target_gender`, and `target_age_group`.
-- Checked `target_interests` for formatting issues such as duplicate commas and excessive whitespace.
+- Validated categorical fields against the expected domain values for `ad_platform`, `ad_type`, `target_gender`, and `target_age_group`.
+- Checked `target_interests` for formatting inconsistencies, including duplicate commas and excessive whitespace.
 
 ## Data Cleaning
 
 ### Cleaned Analytical Table
 
-A cleaned analytical table, `cln_ads`, was created from the staging table.
+A cleaned analytical table, `cln_ads`, was created from the staging table `ads_stg`.
 
 The cleaning process included:
 
 - Validating key identifiers and text fields.
-- Checking categorical fields for valid domain values.
+- Checking categorical fields against expected domain values.
 - Checking text fields for formatting inconsistencies.
 - Creating the `cln_ads` table for further analytical processing.
 
@@ -83,9 +83,11 @@ The cleaning process included:
 
 ### Validation Results
 
-- **NULL values:** validated across key columns.
+The validation process confirmed that the main data quality checks were performed before analytical processing:
+
+- **NULL values:** checked in key columns.
 - **ID formats:** validated using `SAFE_CAST`.
 - **Duplicates:** checked for duplicate `ad_id` values.
-- **Categorical fields:** validated against available domain values.
+- **Categorical fields:** validated against expected domain values.
 - **Text formatting:** checked for inconsistencies in `target_interests`.
-- **Final table:** `cln_ads` was created for further analysis.
+- **Final table:** `cln_ads` was created as the cleaned analytical table for further analysis.
