@@ -1,0 +1,20 @@
+---Checking whether all keys that will be used to create relationships in Power BI actually match across the tables.
+SELECT COUNT(*) AS orphan_ad_id
+FROM `payment-analytics-dwh.payment_dwh.cln_ad_events` e
+LEFT JOIN `payment-analytics-dwh.payment_dwh.cln_ads` a USING (ad_id)
+WHERE a.ad_id IS NULL;
+
+SELECT COUNT(*) AS orphan_campaign_id
+FROM `payment-analytics-dwh.payment_dwh.cln_ads`a
+LEFT JOIN `payment-analytics-dwh.payment_dwh.cln_campaigns` c USING (campaign_id)
+WHERE c.campaign_id IS NULL;
+
+SELECT COUNT(*) AS orphan_event_date
+FROM `payment-analytics-dwh.payment_dwh.cln_ad_events` e
+LEFT JOIN `payment-analytics-dwh.payment_dwh.cln_calendar_table` cal ON e.event_date = cal.Date
+WHERE cal.Date IS NULL;
+
+SELECT COUNT(*) AS orphan_user_id
+FROM `payment-analytics-dwh.payment_dwh.cln_ad_events` e
+LEFT JOIN `payment-analytics-dwh.payment_dwh.cln_users` u USING (user_id)
+WHERE u.user_id IS NULL;
