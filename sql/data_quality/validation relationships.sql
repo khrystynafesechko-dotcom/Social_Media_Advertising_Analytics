@@ -10,7 +10,7 @@ FROM `payment-analytics-dwh.payment_dwh.cln_ads`a
 LEFT JOIN `payment-analytics-dwh.payment_dwh.cln_campaigns` c USING (campaign_id)
 WHERE c.campaign_id IS NULL;
 
----
+---ad_events -> calendar_table
 SELECT COUNT(*) AS orphan_event_date
 FROM `payment-analytics-dwh.payment_dwh.cln_ad_events` e
 LEFT JOIN `payment-analytics-dwh.payment_dwh.cln_calendar_table` cal ON e.event_date = cal.Date
