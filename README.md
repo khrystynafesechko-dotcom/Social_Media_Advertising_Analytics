@@ -189,3 +189,43 @@ The validation process ensured that the critical data quality rules were checked
 * **Country Validation:** Checked country values against the defined format rules.
 * **Final Table:** cln_users was successfully created as the cleaned analytical source for further data transformation and BI reporting.
 
+## Data Quality & Validation — ad_events / users referential integrity
+
+### Validation Checks
+The following validation checks were performed to confirm referential integrity
+between `cln_ad_events` and `cln_users` before loading into Power BI:
+
+- **Referential Integrity Check (ad_events → users):** Verified that every
+  `user_id` referenced in `cln_ad_events` has a matching `user_id` in
+  `cln_users`, using a LEFT JOIN and checking for NULL matches.
+- **Orphan Record Count:** Counted the number of distinct `user_id` values
+  present in `cln_ad_events` but missing from `cln_users` (initial result: 99
+  orphan users, affecting thousands of event rows).
+- **Source Verification:** Confirmed the same orphan `user_id` values existed
+  in the raw BigQuery source tables, ruling out an export/cleaning artifact.
+
+### Data Remediation
+Rather than dropping the affected rows, a placeholder record was introduced
+to preserve all event data:
+
+- Added a single `'unknown'` placeholder row to `cln_users`, with all
+  descriptive fields set to `'Unknown'`.
+- Rebuilt `cln_ad_events`, remapping any `user_id` not found in `cln_users`
+  to `'unknown'`.
+- Rebuilt both tables using `CREATE OR REPLACE` to ensure the changes were
+  materialized (not just previewed via `SELECT`).
+
+### Results
+- **Orphan users:** 0 (down from 99) — every `user_id` in `cln_ad_events`
+  now resolves to a record in `cln_users`.
+- **Placeholder integrity:** Exactly one `'unknown'` row exists in
+  `cln_users`, confirming no accidental duplication from repeated table
+  rebuilds.
+- **Row counts:** Verified total row counts in both `cln_ad_events` and
+  `cln_users` after rebuild to confirm no unintended row duplication or loss.
+- **Additional relationship checks:** The same LEFT JOIN pattern was applied
+  to confirm referential integrity for `ad_events → ads`, `ads → campaigns`,
+  and `ad_events → calendar_table`, all returning 0 orphan records.
+- **Final state:** `cln_ad_events`, `cln_ads`, `cln_campaigns`, `cln_users`,
+  and `cln_calendar_table` are fully linked with no orphan keys and are
+  ready to be loaded into Power BI as a star schema.
