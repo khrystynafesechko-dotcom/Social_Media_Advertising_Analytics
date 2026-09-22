@@ -1,4 +1,5 @@
-## Payment Analytics
+# Social Media Advertising Analytics
+
 
 ## Data Quality & Validation — `ad_events_stg`
 
