@@ -83,7 +83,7 @@ The validation process confirmed that the main data quality checks were performe
 - **Text formatting:** checked for inconsistencies in `target_interests`.
 - **Final table:** `cln_ads` was created as the cleaned analytical table for further analysis.
 
-## Data Quality & Validation — `Calendar_Table_stg`
+## Data Quality & Validation — `calendar_table_stg`
 
 ### Validation Checks
 
@@ -117,7 +117,7 @@ The validation process confirmed that the main data quality checks were performe
 > **Note:** The dataset is synthetic, so additional checks such as referential integrity, value anomalies, and date sequence continuity were not performed, as the data was generated without real-world source errors.
 
 
-# Data Quality & Validation — Campaigns Table
+# Data Quality & Validation — `campaigns_stg`
 
 ## Validation Checks
 The following validation checks were performed on the `campaigns_stg` table:
@@ -146,4 +146,46 @@ The validation process confirmed that all critical data quality checks were succ
 * **Duplicates:** Checked for duplicate `campaign_id` entries — primary key uniqueness is maintained.
 * **Logical & Business Rules:** Dates, durations, and financial values passed all consistency checks.
 * **Final table:** `cln_campaigns` was successfully created as the clean analytical source for BI reporting.
+
+# Data Quality & Validation — users_stg
+
+## Validation Checks
+The following validation checks were performed on the users_stg table:
+
+* **Missing Values Validation:** Checked for NULL values and empty strings across key columns including user_id, user_gender, user_age, age_group, country, location, and interests.
+
+* **Primary Key Uniqueness Check:** Verified user_id values to identify duplicate user records and ensure each user can be uniquely identified.
+
+* **Full Duplicate Check:** Compared all user attributes to identify completely duplicated records in the staging table.
+
+* **User ID Format Validation:** Checked that user_id contains only alphanumeric characters (A–Z, a–z, 0–9).
+
+* **Age Format Validation:** Verified that user_age contains only numeric values.
+
+* **Age Range Validation:** Checked that user_age falls within the valid range of 0–120 years.
+
+* **Country Format Validation:** Checked country values to ensure they contain valid alphabetical characters and allowed separators such as spaces, dots, hyphens, and apostrophes.
+
+* **Country Value Distribution:** Reviewed unique country values and their frequencies to identify potential inconsistencies in the source data.
+
+## Data Cleaning
+### Cleaned Analytical Table
+A cleaned analytical table, cln_users, was created from the staging table users_stg.
+
+The cleaning process included:
+* Filtering records with invalid user_id formats.
+* Validating that user_age contains numeric values.
+* Ensuring that user_age is within the 0–120 range.
+* Validating the format of the country field.
+* Removing records that do not satisfy the defined data quality rules.
+
+## Results
+### Validation Results
+The validation process ensured that the critical data quality rules were checked before analytical processing:
+* **NULL / Empty Values:** Checked across all key columns to identify missing or blank values.
+* **Duplicates:** Checked for duplicate user_id values and fully duplicated user records.
+* **User ID Format:**  Validated that user IDs contain only alphanumeric characters.
+* **Age Validation:** Confirmed that user ages are numeric and fall within the 0–120 range.
+* **Country Validation:** Checked country values against the defined format rules.
+* **Final Table:** cln_users was successfully created as the cleaned analytical source for further data transformation and BI reporting.
 
