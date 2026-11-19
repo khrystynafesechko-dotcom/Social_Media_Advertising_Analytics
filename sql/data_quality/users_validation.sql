@@ -58,7 +58,7 @@ SELECT
   COUNTIF(user_id IS NULL OR TRIM(user_id) = '')                              AS null_user_id,
   COUNTIF(NOT REGEXP_CONTAINS(user_id, r'^[0-9a-zA-Z]+$'))                    AS invalid_user_id,
   COUNTIF(NOT REGEXP_CONTAINS(TRIM(CAST(user_age AS STRING)), r'^[0-9]+$'))   AS non_numeric_age,
-  COUNTIF(SAFE_CAST(user_age AS INT64) NOT BETWEEN 0 AND 120)                 AS age_out_of_range,
+  COUNTIF(SAFE_CAST(user_age AS INT) NOT BETWEEN 0 AND 120)                 AS age_out_of_range,
   COUNTIF(NOT REGEXP_CONTAINS(TRIM(country), r"^[A-Za-z][A-Za-z\s\.\-']*$"))  AS invalid_country
 FROM `payment-analytics-dwh.payment_dwh.cln_users`;
 
